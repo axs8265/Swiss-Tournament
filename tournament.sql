@@ -44,9 +44,9 @@ CONSTRAINT match_tournament_fk FOREIGN KEY (match_tournamentId) REFERENCES tourn
 ALTER TABLE tournament ADD CONSTRAINT unique_tournament_name UNIQUE (tournament_name);
 
 --Create Player standings view
- SELECT p.player_id,
-    p.player_name,
-    sum(
+CREATE OR REPLACE View vPlayerStandings AS
+SELECT p.player_id, p.player_name,
+    SUM(
         CASE
             WHEN m.winner_playerid = p.player_id OR m.match_byewin = '1' THEN 1
             ELSE 0
